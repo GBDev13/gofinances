@@ -1,6 +1,6 @@
 import React from 'react';
 import { HighlightCard } from '../../components/HighlightCard';
-import { TransactionCard, TransactionCardProps } from '../../components/TransactionCard';
+import { TransactionCard, TransactionCardProps } from '../../components/Forms/TransactionCard';
 
 import {
   Container,
