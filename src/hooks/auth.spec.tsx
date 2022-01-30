@@ -14,18 +14,12 @@ const userTest = {
   photo: 'any_photo.png'
 };
 
-// jest.mock('expo-auth-session', () => {
-//   return {
-//     startAsync: () => ({
-//       type: 'success',
-//       params: {
-//         access_token: 'any_token',
-//       }
-//     }),
-//   }
-// })
-
 jest.mock('expo-auth-session');
+
+jest.mock("@react-native-async-storage/async-storage", () => ({
+  getItem: jest.fn(),
+  setItem: jest.fn()
+}))
 
 describe('Auth Hook', () => {
   it('should be able to sign in with Google account existing', async () => {
@@ -64,5 +58,17 @@ describe('Auth Hook', () => {
     await act(() => result.current.signInWithGoogle());
 
     expect(result.current.user).not.toHaveProperty('id');
+  });
+
+  it('should be error with incorrectly Google parameters', async () => {
+    const { result } = renderHook(() => useAuth(), {
+      wrapper: AuthProvider
+    });
+
+    try {
+      await act(() => result.current.signInWithGoogle());
+    } catch {
+      expect(result.current.user).toEqual({});
+    }
   });
 });

@@ -54,3 +54,6 @@ buck-out/
 web-build/
 
 .env
+
+#jest
+coverage/
